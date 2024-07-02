@@ -1,0 +1,157 @@
+
+*{
+  padding:0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+.lgpage{
+  
+  background: url(./b3.jpg) no-repeat center center/cover;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  margin: 0px 0px;
+  justify-content: center;
+  align-items: center;
+}
+
+.lgcontainer{
+  padding: 28px 26px;
+  display: flex;
+  border: 5px solid #6d9f60;
+  background: #3535351c;
+  flex-direction: column;
+  flex:45%;
+  border-radius: 14px;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 12px 0 black;
+  align-items: center;
+}
+.timage{
+  flex:1;
+  padding: 1em;
+  height: 100%;
+  width: 100%;
+}
+.ic{
+  flex:65%
+}
+.lgform{
+  padding: 31px 23px;
+  max-width: 420px;
+  margin-top: 18px;
+  background-color: #cac8b111;
+  text-align: center;
+  box-shadow: 0 0 3px 0 black;
+}
+
+.tl {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 3px;
+  border-radius: 22px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.button{
+  background-color: #6d9f60;
+  padding: 6px 12px;
+  margin-top: 10px;
+  border: 2px solid rgb(24, 22, 26);
+  cursor: pointer;
+  border-radius: 15px;
+  color: azure;
+  box-shadow: 5px 2px 10px -4px #494848;
+}
+.button:hover{
+  color:#026b5a;
+  background-color: #d6d57a;
+}
+
+
+
+.lgcontainer h1{
+  color:#6d9f60;
+}
+
+.lcontainer{
+  display: flex;
+  border: 5px solid #6d9f60;
+  background: #2a2b2b75;
+  margin: 50px 50px;
+  padding: 10px;
+}
+.roompage {
+  background: url(./b4.jpg) no-repeat center center/cover;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.heading {
+  font-size: 3rem;
+  margin: 17px;
+}
+.iconv {
+  margin-top: 2rem;
+  font-size: 7rem !important;
+}
+.myvideo{
+  float:right;
+  height:300px;
+  width: 300px
+
+}
+.yourvideo {
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 100% !important;
+  width: 100% !important;
+}
+.myvideo {
+  position: absolute !important;
+  z-index: 2;
+  float: right;
+  bottom: -19px;
+  right: 28px;
+  height: 300px !important;
+  width: 300px !important;
+}
+.roombtn {
+  position: absolute;
+  bottom: 22px;
+  z-index: 2;
+  cursor: pointer;
+  color: #ceb1ed;
+  border: 2px solid;
+  padding: 10px;
+  background: #4b0126;
+  border-radius: 20px;
+}
+@media only screen and (max-width: 60vh){
+  
+  .ic{
+    display: none !important;
+  }
+  
+  
+}
+@media only screen and (max-width: 900px){
+  .myvideo {
+    bottom: 0%;
+    height: 32vh !important;
+    width: 40vw !important;
+}
+.roombtn {
+  position: absolute;
+  bottom: 85px;
+ left:20px;
+}
+}
