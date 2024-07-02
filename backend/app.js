@@ -1,6 +1,25 @@
-const {Server} = require("socket.io");
-const io = new Server(8000, {
-    cors: true,
+const express = require('express');
+const path = require('path');
+const { Server } = require('socket.io');
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
+
+
+const PORT = process.env.PORT || 8000;
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: "*", 
+  },
 });
 const emailToSocketIdMap= new Map();
 const socketIdToEmailMap= new Map();
