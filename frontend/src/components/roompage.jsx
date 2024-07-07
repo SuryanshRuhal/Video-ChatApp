@@ -108,11 +108,11 @@ function Room(){
         {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
         { myStream && (
             <>
-        <ReactPlayer className="myvideo" playing muted url={myStream}/>
+        <ReactPlayer className="myvideo" playing url={myStream}/>
         </>)}
         { remoteStream && (
             <>
-        <ReactPlayer className="yourvideo" playing muted url={remoteStream}/>
+        <ReactPlayer className="yourvideo" playing  url={remoteStream}/>
         </>)}
         </>}
         </div>
