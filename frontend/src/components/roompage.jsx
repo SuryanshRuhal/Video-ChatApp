@@ -2,6 +2,7 @@ import React, { useCallback, useEffect,useState } from "react";
 import { useSocket } from "../contextprovider/socketprovider";
 import DuoIcon from '@mui/icons-material/Duo';
 import ReactPlayer from "react-player";
+import Draggable from 'react-draggable'
 import peer from "../service/peer";
 function Room(){
     const  socket= useSocket();
@@ -108,7 +109,9 @@ function Room(){
         {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
         { myStream && (
             <>
-        <ReactPlayer className="myvideo" playing url={myStream}/>
+             <Draggable>
+             <ReactPlayer className="myvideo" playing url={myStream}/>
+             </Draggable>
         </>)}
         { remoteStream && (
             <>
