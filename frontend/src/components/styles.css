@@ -102,12 +102,7 @@
   margin-top: 2rem;
   font-size: 7rem !important;
 }
-.myvideo{
-  float:right;
-  height:300px;
-  width: 300px
 
-}
 .yourvideo {
   position: fixed;     
   top: 0;
@@ -118,9 +113,7 @@
   z-index: -1;         
 }
 .myvideo {
-  position: absolute !important;
   z-index: 2;
-  float: right;
   height: 300px !important;
   width: 300px !important;
 }
@@ -146,8 +139,6 @@
 @media only screen and (max-width: 900px){
   
 .myvideo {
-  position: absolute !important;
-  z-index: 2;
   float: right;
   height: 32vh !important;
   width: 40vw !important;
