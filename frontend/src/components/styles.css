@@ -114,7 +114,7 @@
   left: 0;
   height: 100vh;       
   width: 100vw;        
-  object-fit: cover;   
+  object-fit: cover;
   z-index: -1;         
 }
 .myvideo {
@@ -144,9 +144,13 @@
   
 }
 @media only screen and (max-width: 900px){
-  .myvideo {
-    height: 32vh !important;
-    width: 40vw !important;
+  
+.myvideo {
+  position: absolute !important;
+  z-index: 2;
+  float: right;
+  height: 32vh !important;
+  width: 40vw !important;
 }
 .roombtn {
   position: absolute;
