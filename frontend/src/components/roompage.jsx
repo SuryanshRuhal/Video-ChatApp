@@ -110,7 +110,7 @@ function Room(){
         { myStream && (
             <>
              <Draggable>
-             <ReactPlayer className="myvideo" playing url={myStream}/>
+               <ReactPlayer className="myvideo" playing url={myStream}/>
              </Draggable>
         </>)}
         { remoteStream && (

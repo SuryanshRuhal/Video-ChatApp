@@ -119,8 +119,6 @@
   position: absolute !important;
   z-index: 2;
   float: right;
-  bottom: -19px;
-  right: 28px;
   height: 300px !important;
   width: 300px !important;
 }
@@ -145,7 +143,6 @@
 }
 @media only screen and (max-width: 900px){
   .myvideo {
-    bottom: 0%;
     height: 32vh !important;
     width: 40vw !important;
 }
