@@ -109,11 +109,13 @@
 
 }
 .yourvideo {
+  position: fixed;     
   top: 0;
   left: 0;
-  position: absolute;
-  height: 100% !important;
-  width: 100% !important;
+  height: 100vh;       
+  width: 100vw;        
+  object-fit: cover;   
+  z-index: -1;         
 }
 .myvideo {
   position: absolute !important;
