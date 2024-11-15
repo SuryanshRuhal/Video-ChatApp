@@ -104,15 +104,6 @@
 }
 
 .yourvideo {
-  position: fixed;     
-  top: 0;
-  left: 0;
-  height: 100vh;       
-  width: 100vw;        
-  object-fit: cover;
-  z-index: -1;         
-}
-.yourvideo {
   position: fixed;       
   top: 0;
   left: 0;
