@@ -43,6 +43,7 @@ function Room(){
     },[socket]);
 
     const sendStreams = useCallback(() => {
+        setcaller()
         for (const track of myStream.getTracks()) {
           peer.peer.addTrack(track, myStream);
         }
@@ -51,8 +52,7 @@ function Room(){
     const handleCallAccepted= useCallback(({from, ans})=>{
         peer.setLocalDescription(ans);
         console.log("Call Accepted");
-        setcalling(false);
-        setcaller(false);
+        setcalling(true);
         sendStreams();
     },[sendStreams]);
 
@@ -70,7 +70,7 @@ function Room(){
 
     const handleNegoNeededIncoming= useCallback(async({from, offer})=>{
         const ans= await peer.getAnswer(offer);
-        socket.emit('peer:nego:done',{to: from, ans});
+        socket.emit('peer:nego:done',{to: from,ans});
     },[socket]);
     
     const handleNegoNeededFinal= useCallback(async ({ans})=>{
@@ -79,6 +79,7 @@ function Room(){
 
     useEffect(()=>{
         peer.peer.addEventListener("track", async (ev)=>{
+            setcalling(true);
             setcaller(true);
             const remoteStream=  ev.streams;
             setRemoteStream(remoteStream[0]);
@@ -106,7 +107,7 @@ function Room(){
          <h4 className="subheading">{remotesocketid? "Connected" : "Currently, None is present in the room "}</h4>
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
-        {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
+        {myStream && <button className="roombtn" onClick={sendStreams}>{caller?"Answer":""}</button>}
         { myStream && (
             <>
              <Draggable>
