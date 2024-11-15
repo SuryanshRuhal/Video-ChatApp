@@ -18,10 +18,16 @@ function Room(){
     }, []);
 
     const handleCallUser= useCallback(async()=>{
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio: true,
+             video: true,
+        });
+        
         const offer= await peer.getOffer();
         socket.emit("user:call",{
             to: remotesocketid, offer
         })
+        setMyStream(stream);
     },[remotesocketid, socket]);
 
     const handleIncomingCall= useCallback(async({from, offer})=>{
@@ -43,17 +49,12 @@ function Room(){
         }
       }, [myStream]);
 
-    const handleCallAccepted = useCallback(async ({ from, ans }) => {
+    const handleCallAccepted= useCallback(({from, ans})=>{
+        peer.setLocalDescription(ans);
         console.log("Call Accepted");
-        await peer.setLocalDescription(ans);
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: true,
-            video: true,
-        });
-        setMyStream(stream);
-        sendStreams();
         setcalling(true);
-    }, [sendStreams]);
+        sendStreams();
+    },[sendStreams]);
 
     const handleNegoNeeded= useCallback(async()=>{
         const offer= await peer.getOffer();
@@ -107,7 +108,8 @@ function Room(){
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
         {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
-        {myStream && remoteStream && <button className="roombtn">Disconnect</button>}
+        
+        {myStream && remoteStream && <button className="roombtn" onClick={sendStreams}>Disconnect</button>}
         { myStream && (
             <>
              <Draggable>
