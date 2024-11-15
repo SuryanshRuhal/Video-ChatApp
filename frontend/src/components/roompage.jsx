@@ -107,16 +107,19 @@ function Room(){
          <h4 className="subheading">{remotesocketid? "Connected" : "Currently, None is present in the room "}</h4>
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
-        {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
+        {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer {caller} {calling}</button>}
         { myStream && (
             <>
              <Draggable>
                <ReactPlayer className="myvideo" playing url={myStream}/>
              </Draggable>
-        </>)}
+        </>)} 
         { remoteStream && (
             <>
-        <ReactPlayer className="yourvideo" playing  url={remoteStream}/>
+            <div className="yourvideodiv">
+            <ReactPlayer className="yourvideo" playing  url={remoteStream}/>
+            </div>
+       
         </>)}
         </>}
         </div>
