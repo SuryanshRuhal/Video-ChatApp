@@ -73,7 +73,7 @@ function Room(){
         setRemoteStream(null);
         setcalling(false);
         setcaller(false);
-    }, [myStream, remoteSocketId, socket]);
+    }, [myStream, remotesocketid, socket]);
     
     const handleRemoteDisconnect = useCallback(() => {
         console.log("Remote user disconnected");
