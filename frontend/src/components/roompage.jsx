@@ -43,9 +43,9 @@ function Room(){
     },[socket]);
 
     const sendStreams = useCallback(() => {
-        setcaller()
         for (const track of myStream.getTracks()) {
           peer.peer.addTrack(track, myStream);
+          setcaller(false);
         }
       }, [myStream]);
 
@@ -53,7 +53,6 @@ function Room(){
         peer.setLocalDescription(ans);
         console.log("Call Accepted");
         setcalling(true);
-        sendStreams();
     },[sendStreams]);
 
     const handleNegoNeeded= useCallback(async()=>{
@@ -107,7 +106,7 @@ function Room(){
          <h4 className="subheading">{remotesocketid? "Connected" : "Currently, None is present in the room "}</h4>
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
-        {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer {caller} {calling}</button>}
+        {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
         { myStream && (
             <>
              <Draggable>
