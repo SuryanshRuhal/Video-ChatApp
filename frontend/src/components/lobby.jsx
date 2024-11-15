@@ -25,7 +25,7 @@ function Lobby(){
         const {contact}=data;
         Navigate(`/room/${contact.room}`)
     },[]);
-
+    // listen to socket event room:join and return handlejoinroom callback function
     useEffect(()=>{
         socket.on("room:join", handlejoinroom);
         return ()=>{
