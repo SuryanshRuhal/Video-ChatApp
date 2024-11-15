@@ -8,7 +8,7 @@ function Room(){
     const  socket= useSocket();
     const [myStream, setMyStream]= useState();
     const [calling,setcalling]= useState(false);
-    const [caller,setcaller]= useState(false);
+    const [caller,setcaller]= useState(null);
     const[remoteStream,setRemoteStream]= useState(null);
     const [remotesocketid, setremotesocketid]= useState();
     
