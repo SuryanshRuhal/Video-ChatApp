@@ -107,7 +107,7 @@ function Room(){
          <h4 className="subheading">{remotesocketid? "Connected" : "Currently, None is present in the room "}</h4>
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
-        {myStream && <button className="roombtn" onClick={sendStreams}>{caller?"Answer":""}</button>}
+        {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
         { myStream && (
             <>
              <Draggable>
