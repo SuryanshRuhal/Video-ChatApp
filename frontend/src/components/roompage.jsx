@@ -51,7 +51,8 @@ function Room(){
     const handleCallAccepted= useCallback(({from, ans})=>{
         peer.setLocalDescription(ans);
         console.log("Call Accepted");
-        setcalling(true);
+        setcalling(false);
+        setcaller(false);
         sendStreams();
     },[sendStreams]);
 
@@ -69,7 +70,7 @@ function Room(){
 
     const handleNegoNeededIncoming= useCallback(async({from, offer})=>{
         const ans= await peer.getAnswer(offer);
-        socket.emit('peer:nego:done',{to: from,ans});
+        socket.emit('peer:nego:done',{to: from, ans});
     },[socket]);
     
     const handleNegoNeededFinal= useCallback(async ({ans})=>{
@@ -78,7 +79,6 @@ function Room(){
 
     useEffect(()=>{
         peer.peer.addEventListener("track", async (ev)=>{
-            setcalling(true);
             setcaller(true);
             const remoteStream=  ev.streams;
             setRemoteStream(remoteStream[0]);

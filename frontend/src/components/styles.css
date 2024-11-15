@@ -134,7 +134,7 @@
 .roombtn {
   position: absolute;
   bottom: 22px;
-  z-index: 2;
+  z-index: 5;
   cursor: pointer;
   color: #ceb1ed;
   border: 2px solid;
