@@ -43,6 +43,7 @@ function Room(){
     },[socket]);
 
     const sendStreams = useCallback(() => {
+        setcaller(false);
         for (const track of myStream.getTracks()) {
           peer.peer.addTrack(track, myStream);
         }
