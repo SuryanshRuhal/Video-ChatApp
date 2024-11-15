@@ -107,6 +107,7 @@ function Room(){
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
         {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
+        {myStream && remoteStream && <button className="roombtn">Disconnect</button>}
         { myStream && (
             <>
              <Draggable>
