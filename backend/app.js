@@ -49,5 +49,15 @@ io.on("connection", (socket) => {
   socket.on("peer:nego:done",({to,ans})=>{
     io.to(to).emit("peer:nego:final", {from: socket.id, ans});
   });
+  // **Handle call disconnect**
+  socket.on("call:disconnect", ({ to }) => {
+    console.log(`Disconnecting call with ${to}`);
+    io.to(to).emit("call:disconnect"); // Notify the other user
+});
+
+// Handle user disconnecting
+socket.on("disconnect", () => {
+    console.log(`User disconnected: ${socket.id}`);
+});
 });
 

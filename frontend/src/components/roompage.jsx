@@ -55,7 +55,44 @@ function Room(){
         setcalling(true);
         sendStreams();
     },[sendStreams]);
-
+    
+    const handleDisconnect = useCallback(() => {
+        // Stop local stream tracks
+        if (myStream) {
+            myStream.getTracks().forEach(track => track.stop());
+            setMyStream(null); // Reset state
+        }
+    
+        // Close the peer connection
+        peer.peer.close();
+    
+        // Notify the remote user
+        socket.emit("call:disconnect", { to: remotesocketid });
+    
+        // Reset state
+        setRemoteStream(null);
+        setcalling(false);
+        setcaller(false);
+    }, [myStream, remoteSocketId, socket]);
+    
+    const handleRemoteDisconnect = useCallback(() => {
+        console.log("Remote user disconnected");
+    
+        // Stop local stream tracks
+        if (myStream) {
+            myStream.getTracks().forEach(track => track.stop());
+            setMyStream(null); // Reset state
+        }
+    
+        // Close the peer connection
+        peer.peer.close();
+    
+        // Reset state
+        setRemoteStream(null);
+        setcalling(false);
+        setcaller(false);
+    }, [myStream]);
+    
     const handleNegoNeeded= useCallback(async()=>{
         const offer= await peer.getOffer();
             socket.emit("peer:nego:needed",{ offer, to: remotesocketid})
@@ -92,12 +129,15 @@ function Room(){
         socket.on("call:accepted",handleCallAccepted);
         socket.on("peer:nego:needed",handleNegoNeededIncoming);
         socket.on("peer:nego:final",handleNegoNeededFinal);
+        socket.on("call:disconnect", handleRemoteDisconnect);
+
         return()=>{
             socket.off("user:joined",handleUserJoined);
             socket.off("incoming:call", handleIncomingCall);
             socket.off("call:accepted",handleCallAccepted);
             socket.off("peer:nego:needed",handleNegoNeededIncoming);
             socket.off("peer:nego:final",handleNegoNeededFinal);
+            socket.off("call:disconnect", handleRemoteDisconnect);
         }
     },[socket, handleUserJoined,handleIncomingCall,handleNegoNeededFinal,handleCallAccepted,handleNegoNeededIncoming]);
     return(
@@ -108,7 +148,7 @@ function Room(){
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
         {myStream && caller && <button className="roombtn" onClick={sendStreams}>Answer</button>}
-        {myStream && !caller && <button className="roombtn" >Disconnect</button>}
+        {calling && <button className="roombtn" onClick={handleDisconnect} >Disconnect</button>}
         { myStream && (
             <>
              <Draggable>
