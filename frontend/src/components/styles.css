@@ -127,6 +127,9 @@
   z-index: 3;
   height: 300px !important;
   width: 300px !important;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }
 .roombtn {
   position: absolute;
