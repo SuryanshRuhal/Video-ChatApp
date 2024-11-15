@@ -55,43 +55,82 @@ function Room(){
         setcalling(true);
         sendStreams();
     },[sendStreams]);
-    
+
     const handleDisconnect = useCallback(() => {
+        console.log("Disconnect initiated");
+    
         // Stop local stream tracks
         if (myStream) {
-            myStream.getTracks().forEach(track => track.stop());
+            console.log("Stopping local stream tracks...");
+            myStream.getTracks().forEach((track) => {
+                console.log(`Stopping track: ${track.kind}`);
+                track.stop();
+            });
             setMyStream(null); // Reset state
+            console.log("My stream set to null");
+        } else {
+            console.log("No local stream to stop");
         }
     
         // Close the peer connection
-        peer.peer.close();
+        if (peer.peer) {
+            console.log("Closing peer connection...");
+            peer.peer.close();
+        } else {
+            console.log("Peer connection already closed or undefined");
+        }
     
         // Notify the remote user
-        socket.emit("call:disconnect", { to: remotesocketid });
+        if (remotesocketid) {
+            console.log(`Notifying remote user (socket ID: ${remotesocketid}) about disconnection...`);
+            socket.emit("call:disconnect", { to: remotesocketid });
+        } else {
+            console.log("No remote user to notify");
+        }
     
         // Reset state
+        console.log("Resetting local state...");
         setRemoteStream(null);
         setcalling(false);
         setcaller(false);
+    
+        console.log("Disconnect process completed");
     }, [myStream, remotesocketid, socket]);
+    
     
     const handleRemoteDisconnect = useCallback(() => {
         console.log("Remote user disconnected");
     
         // Stop local stream tracks
         if (myStream) {
-            myStream.getTracks().forEach(track => track.stop());
+            console.log("Stopping local stream tracks...");
+            myStream.getTracks().forEach((track) => {
+                console.log(`Stopping track: ${track.kind}`);
+                track.stop();
+            });
             setMyStream(null); // Reset state
+            console.log("My stream set to null");
+        } else {
+            console.log("No local stream to stop");
         }
     
         // Close the peer connection
-        peer.peer.close();
+        if (peer.peer) {
+            console.log("Closing peer connection...");
+            peer.peer.close();
+        } else {
+            console.log("Peer connection already closed or undefined");
+        }
     
         // Reset state
+        console.log("Resetting local state...");
         setRemoteStream(null);
         setcalling(false);
         setcaller(false);
+    
+        console.log("Remote disconnect process completed");
     }, [myStream]);
+    
     
     const handleNegoNeeded= useCallback(async()=>{
         const offer= await peer.getOffer();
@@ -139,7 +178,7 @@ function Room(){
             socket.off("peer:nego:final",handleNegoNeededFinal);
             socket.off("call:disconnect", handleRemoteDisconnect);
         }
-    },[socket, handleUserJoined,handleIncomingCall,handleNegoNeededFinal,handleCallAccepted,handleNegoNeededIncoming]);
+    },[socket, handleUserJoined,handleIncomingCall,handleRemoteDisconnect,handleNegoNeededFinal,handleCallAccepted,handleNegoNeededIncoming]);
     return(
         <div className="roompage">
          {(!calling)?<>
