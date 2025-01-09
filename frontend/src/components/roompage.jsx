@@ -55,80 +55,80 @@ function Room(){
         sendStreams();
     },[sendStreams]);
 
-    const handleDisconnect = useCallback(() => {
-        console.log("Disconnect initiated");
+    // const handleDisconnect = useCallback(() => {
+    //     console.log("Disconnect initiated");
     
-        // Stop local stream tracks
-        if (myStream) {
-            console.log("Stopping local stream tracks...");
-            myStream.getTracks().forEach((track) => {
-                console.log(`Stopping track: ${track.kind}`);
-                track.stop();
-            });
-            setMyStream(null); // Reset state
-            console.log("My stream set to null");
-        } else {
-            console.log("No local stream to stop");
-        }
+    //     // Stop local stream tracks
+    //     if (myStream) {
+    //         console.log("Stopping local stream tracks...");
+    //         myStream.getTracks().forEach((track) => {
+    //             console.log(`Stopping track: ${track.kind}`);
+    //             track.stop();
+    //         });
+    //         setMyStream(null); // Reset state
+    //         console.log("My stream set to null");
+    //     } else {
+    //         console.log("No local stream to stop");
+    //     }
     
-        // Close the peer connection
-        if (peer.peer) {
-            console.log("Closing peer connection...");
-            peer.peer.close();
-        } else {
-            console.log("Peer connection already closed or undefined");
-        }
+    //     // Close the peer connection
+    //     if (peer.peer) {
+    //         console.log("Closing peer connection...");
+    //         peer.peer.close();
+    //     } else {
+    //         console.log("Peer connection already closed or undefined");
+    //     }
     
-        // Notify the remote user
-        if (remotesocketid) {
-            console.log(`Notifying remote user (socket ID: ${remotesocketid}) about disconnection...`);
-            socket.emit("call:disconnect", { to: remotesocketid });
-        } else {
-            console.log("No remote user to notify");
-        }
+    //     // Notify the remote user
+    //     if (remotesocketid) {
+    //         console.log(`Notifying remote user (socket ID: ${remotesocketid}) about disconnection...`);
+    //         socket.emit("call:disconnect", { to: remotesocketid });
+    //     } else {
+    //         console.log("No remote user to notify");
+    //     }
     
-        // Reset state
-        console.log("Resetting local state...");
-        setRemoteStream(null);
-        setcalling(false);
-        setcaller(false);
+    //     // Reset state
+    //     console.log("Resetting local state...");
+    //     setRemoteStream(null);
+    //     setcalling(false);
+    //     setcaller(false);
     
-        console.log("Disconnect process completed");
-    }, [myStream, remotesocketid, socket]);
+    //     console.log("Disconnect process completed");
+    // }, [myStream, remotesocketid, socket]);
     
     
-    const handleRemoteDisconnect = useCallback(() => {
-        console.log("Remote user disconnected");
+    // const handleRemoteDisconnect = useCallback(() => {
+    //     console.log("Remote user disconnected");
     
-        // Stop local stream tracks
-        if (myStream) {
-            console.log("Stopping local stream tracks...");
-            myStream.getTracks().forEach((track) => {
-                console.log(`Stopping track: ${track.kind}`);
-                track.stop();
-            });
-            setMyStream(null); // Reset state
-            console.log("My stream set to null");
-        } else {
-            console.log("No local stream to stop");
-        }
+    //     // Stop local stream tracks
+    //     if (myStream) {
+    //         console.log("Stopping local stream tracks...");
+    //         myStream.getTracks().forEach((track) => {
+    //             console.log(`Stopping track: ${track.kind}`);
+    //             track.stop();
+    //         });
+    //         setMyStream(null); // Reset state
+    //         console.log("My stream set to null");
+    //     } else {
+    //         console.log("No local stream to stop");
+    //     }
     
-        // Close the peer connection
-        if (peer.peer) {
-            console.log("Closing peer connection...");
-            peer.peer.close();
-        } else {
-            console.log("Peer connection already closed or undefined");
-        }
+    //     // Close the peer connection
+    //     if (peer.peer) {
+    //         console.log("Closing peer connection...");
+    //         peer.peer.close();
+    //     } else {
+    //         console.log("Peer connection already closed or undefined");
+    //     }
     
-        // Reset state
-        console.log("Resetting local state...");
-        setRemoteStream(null);
-        setcalling(false);
-        setcaller(false);
+    //     // Reset state
+    //     console.log("Resetting local state...");
+    //     setRemoteStream(null);
+    //     setcalling(false);
+    //     setcaller(false);
     
-        console.log("Remote disconnect process completed");
-    }, [myStream]);
+    //     console.log("Remote disconnect process completed");
+    // }, [myStream]);
     
     
     const handleNegoNeeded= useCallback(async()=>{
@@ -167,7 +167,6 @@ function Room(){
         socket.on("call:accepted",handleCallAccepted);
         socket.on("peer:nego:needed",handleNegoNeededIncoming);
         socket.on("peer:nego:final",handleNegoNeededFinal);
-        socket.on("call:disconnect", handleRemoteDisconnect);
 
         return()=>{
             socket.off("user:joined",handleUserJoined);
@@ -175,9 +174,8 @@ function Room(){
             socket.off("call:accepted",handleCallAccepted);
             socket.off("peer:nego:needed",handleNegoNeededIncoming);
             socket.off("peer:nego:final",handleNegoNeededFinal);
-            socket.off("call:disconnect", handleRemoteDisconnect);
         }
-    },[socket, handleUserJoined,handleIncomingCall,handleRemoteDisconnect,handleNegoNeededFinal,handleCallAccepted,handleNegoNeededIncoming]);
+    },[socket, handleUserJoined,handleIncomingCall,handleNegoNeededFinal,handleCallAccepted,handleNegoNeededIncoming]);
     return(
         <div className="roompage">
          {(!calling)?<>
@@ -186,7 +184,6 @@ function Room(){
         {remotesocketid && <DuoIcon className="iconv" onClick={handleCallUser}/>}
         </>:<>
         {calling && <button className="roombtn" onClick={sendStreams}>Answer</button>}
-        {caller && <button className="roombtn" onClick={handleDisconnect} >Disconnect</button>}
         { myStream && (
             <>
              <Draggable>
