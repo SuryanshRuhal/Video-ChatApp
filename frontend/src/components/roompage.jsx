@@ -43,10 +43,17 @@ function Room(){
     },[socket]);
 
     const sendStreams = useCallback(() => {
+        const senders = peer.peer.getSenders();
+        console.log("mystream is", myStream);
         for (const track of myStream.getTracks()) {
-          peer.peer.addTrack(track, myStream);
+            const senderExists = senders.some(sender => sender.track === track);
+    
+            if (!senderExists) {
+                peer.peer.addTrack(track, myStream);
+            }
         }
-      }, [myStream]);
+    }, [myStream]);
+    
 
     const handleCallAccepted= useCallback(({from, ans})=>{
         peer.setLocalDescription(ans);
